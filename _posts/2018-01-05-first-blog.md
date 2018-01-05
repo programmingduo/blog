@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hello World!"
+title: "使用Github Pages建独立博客并链接域名"
 description: "The first 'Hello world' post for Simple Texture theme."
 categories: [uncategorized]
 tags: [random, jekyll]
