@@ -8,17 +8,21 @@
 <!--<![endif]-->
 
 <head>
+    
     {% include common/meta.html %}
     <link href='{{ site.baseurl }}/assets/stylesheets/home.css' rel="stylesheet" type="text/css">
     {% include common/libraries.html %}
 </head>
 
 <body>
+
+    <!-- menu没什么用 -->
     <ul id="menu">
         <li data-menuanchor="bio"><a href="#bio">Biography</a></li>
         <li data-menuanchor="social"><a href="#social">Social Links</a></li>
     </ul>
 
+    <!-- 首页的上半页 -->
     <div id="section0" class="section" data-name="bio">
 
         {% include common/notices.html %}
@@ -31,12 +35,15 @@
         <a class="btn-continue animated bounce" title="{{ site.data.i18n[site.lang].more }}" href="#social"></a>
     </div>
 
+    <!-- 首页的下半夜 -->
     <div id="section1" class="section" data-name="social">
         <h1 class="animated hidden">
             <a class="btn-enter btn-light" title="{{ site.data.i18n[site.lang].enter_blog }}" href="{{ site.paths.blog | relative_url }}">{{ site.data.i18n[site.lang].enter_blog }}</a>
         </h1>
         <div class="social-links animated hidden">
+            <!--
             <a class="btn-light ico-rss" href="{{ site.baseurl }}/feed.xml" rel="me" target="_blank" title="feed"></a>
+        -->
             {% if site.author.email %}
                 <a class="btn-light ico-gmail" href="mailto:{{ site.author.email }}" rel="me" target="_blank" title="email"></a>
             {% endif %}
