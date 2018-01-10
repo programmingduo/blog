@@ -8,7 +8,7 @@ redirect_from:
   - /2017/05/25/
 ---
 
-> This is [kramdown][kramdown] formatting test page for [Simple Texture][Simple Texture] theme.
+> This is [kramdown][kramdown] formatting test page for [this blog][blog] theme.
 
 * Kramdown table of contents
 {:toc .toc}
@@ -17,8 +17,8 @@ redirect_from:
 
 This is a normal paragraph.
 
-This is [a link](http://yizeng.me) to my homepage.
-A [link](http://yizeng.me/blog "Yi Zeng's Blog") can also have a title.
+This is [a link](http://wuduo.me) to my homepage.
+A [link](http://wuduo.me/blog "Wu Duo's Blog") can also have a title.
 
 This is a ***text with light and strong emphasis***.
 
@@ -122,4 +122,4 @@ Here comes an image!
 [^1]: This is a footnote.
 
 [kramdown]: https://kramdown.gettalong.org/
-[Simple Texture]: https://github.com/yizeng/jekyll-theme-simple-texture
+[blog]: https://github.com/programmingduo/blog

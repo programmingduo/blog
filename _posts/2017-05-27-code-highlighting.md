@@ -8,7 +8,7 @@ redirect_from:
   - /2017/05/27/
 ---
 
-> This is code blocks and highlighting test page for [Simple Texture][Simple Texture] theme.
+> This is code blocks and highlighting test page for [this blog's][blog] theme.
 
 * Kramdown table of contents
 {:toc .toc}
@@ -46,8 +46,9 @@ end
 
 ## External Gist
 
+<!-- 
 <script src="https://gist.github.com/yizeng/9b871ad619e6dcdcc0545cac3101f361.js"></script>
-
+-->
 ## Simple Highlight
 
 {% highlight ruby %}
@@ -76,5 +77,4 @@ function myFunction() {
 
 [^1]: This is a footnote.
 
-[kramdown]: https://kramdown.gettalong.org/
-[Simple Texture]: https://github.com/yizeng/jekyll-theme-simple-texture
+[blog]: https://github.com/yizeng/jekyll-theme-simple-texture
