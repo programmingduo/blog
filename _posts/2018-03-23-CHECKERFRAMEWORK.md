@@ -35,6 +35,15 @@ doskey javacheck=java -jar "%CHECKERFRAMEWORK%\checker\dist\checker.jar" $*
 javacheck .\frame.java
 ~~~~~~
 
-效果图：
+# 测试maven项目样例
+checker ramework中自带maven样例。在docs/examples/MavenExample/ 下。
+导入eclipse的maven项目之后，构建过程会出现以下提示。
 
-<img src="\assets\images\usedInBlogs\pic1.png">
+~~~~~
+Plugin execution not covered by lifecycle configuration: org.apache.maven.plugins:maven-dependency-plugin:2.8:properties (execution: default, phase: initialize)
+~~~~~~~
+
+解决办法：
+ <plugins> 标签外再套一个 <pluginManagement> 标签
+
+ 亲测好使。
