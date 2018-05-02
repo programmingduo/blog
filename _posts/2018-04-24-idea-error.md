@@ -18,7 +18,7 @@ redirect_from:
 
 1：
 idea本身缓存出问题。解决方法：
-file-》invalidate Cache/restart
+file->invalidate Cache/restart
 
 2：
 输出路径设置有问题。解决方法：
