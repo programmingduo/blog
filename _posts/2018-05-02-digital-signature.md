@@ -121,7 +121,7 @@ redirect_from:
 
 19.
 
-![smiley](\assets\images\usedInBlogs\digitalSignature\19.png)
+![smiley](\assets\images\usedInBlogs\digitalSignature\19.jpg)
 
 如果这张数字证书不是由受信任的机构颁发的，浏览器会发出另一种警告。
 
