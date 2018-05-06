@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "markdown-语法"
+title: "markdown 语法与本博客实现"
 description: "简单易懂的入门markdown语法以及本模板中的语法"
 categories: [language]
 tags: [markdown]
@@ -23,7 +23,9 @@ redirect_from:
 实现的。
 个人比较喜欢的格式：
 >\# 这是 H1
+> 
 >\## 这是 H2
+>
 >\###### 这是 H6
 
 # 引用
@@ -31,3 +33,10 @@ redirect_from:
 引用主要使用到的是： “\>”
 本模板中有highlight，故引用使用的地方并不多。
 
+# 博客title问题
+"_posts"路径下的文件名并非博客的title，而是浏览网站时的URL。
+
+博客的title是根据博客里面的title一项信息定的。
+
+# 博客路径问题
+博客中使用的路径从博客的根路径开始，并无其他配置。
