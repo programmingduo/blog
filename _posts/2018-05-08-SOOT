@@ -1,0 +1,50 @@
+---
+layout: post
+title: "python learning"
+description: "个人学习Python笔记"
+categories: [tool]
+tags: [tool]
+redirect_from:
+  - /2018/05/08/
+---
+
+* Karmdown table of content
+{:toc .toc}
+
+# soot datastructure
+
+soot builds data structures to represent:
+
+a complete environment(Scene)
+classes(SootClass)
+Fields and Methods(SootMethod, SootField)
+bodies of Methods(come in different flavours, corresponding to different IR levels, ie. JimpleBody)
+
+tupian 1
+
+
+# soot.Main.main()
+
+tasks:
+
+processCmdLine()
+Scene.v().loadNecessaryClasses()
+PackManager.v().runPacks()
+PackManager.v().writeOutput()
+
+# soot pack naming scheme
+
+w->Whole-program phase
+j,s,b,g -> Jimple, Shimple, Baf, Grimp
+b,t,o,a -> Body creation
+           User-defined transformations
+           Optimizations with -O option
+           Attribute generation
+
+# names
+IRs:
+    Baf: compact rep. of Bytecode(stack-vased)
+    Jimple: java's simple, typed, 3-addr(stackless) representation
+    Shimple: SSA-version of Jimple
+    Grimp: like Jimple, but with expressions agGRegated
+    Dava: structured representation used for Decompliling Java
