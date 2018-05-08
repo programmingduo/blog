@@ -22,6 +22,8 @@ redirect_from:
 
 # 二、hello world！
 
+## 单个文件
+
 这个也是为了测试安装环境的。
 
 文件名：test.go
@@ -45,6 +47,27 @@ go run test.go
 ~~~~
 
 即可看到正常输出。
+
+## 项目工程
+
+需要使用命令行先进编译生成.exe文件。之后运行.exe文件。
+
+编译命令：
+
+~~~~
+go build
+~~~~~
+
+默认情况是你的package名(非main包)，或者是第一个源文件的文件名(main包)。
+
+你也可以指定编译输出的文件名命令：
+
+~~~~
+go build -o astaxie.exe
+~~~~~~
+
+
+
 
 # 语法及教程
 
@@ -85,4 +108,3 @@ func main(){
 
 学习
 
-你也可以指定编译输出的文件名。例如1.2节中的mathapp应用，我们可以指定go build -o astaxie.exe，默认情况是你的package名(非main包)，或者是第一个源文件的文件名(main包)。
