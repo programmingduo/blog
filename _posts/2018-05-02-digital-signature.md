@@ -2,8 +2,8 @@
 layout: post
 title: "digital signature tutorial"
 description: "区块链和比特币学习博客"
-categories: [block chains and bit coins]
-tags: [block chains and bit coins]
+categories: [block-chains,bit-coins]
+tags: [block-chains,bit-coins]
 redirect_from:
   - /2018/05/02/
 ---
