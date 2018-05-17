@@ -16,7 +16,7 @@ redirect_from:
 
 [下载传送门](https://www.golangtc.com/download)
 
-图片：1
+![smiley](\assets\images\usedInBlogs\golang\1.jpg)
 
 下载之后双击运行。然后，就好了。。。。
 
@@ -71,7 +71,7 @@ go build -o astaxie.exe
 
 # 语法及教程
 
-http://www.runoob.com/go/go-tutorial.html。这里只贴一些笔记。
+[地址](http://www.runoob.com/go/go-tutorial.html)。这里只贴一些笔记。
 
 ## 变量
 
@@ -102,7 +102,7 @@ func main(){
 
 *  0 0 0 false 1 2 123 hello 123 hello
 
-图片：2
+![smiley](\assets\images\usedInBlogs\golang\2.jpg)
 
 
 

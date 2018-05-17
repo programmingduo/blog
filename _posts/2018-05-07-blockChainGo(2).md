@@ -98,8 +98,8 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 ~~~~~
 
 参考网址：
-[lsh] (https://en.wikipedia.org/wiki/Locality-sensitive_hashing)
-[big] (https://golang.org/pkg/math/big/)
+[lsh](https://en.wikipedia.org/wiki/Locality-sensitive_hashing)
+[big](https://golang.org/pkg/math/big/)
 
 这里，我们构造了 ProofOfWork 结构，里面存储了指向一个块(block)和一个目标(target)的指针。这里的 “目标” ，也就是前一节中所描述的难度。这里使用了一个 大整数 ，我们会将哈希与目标进行比较：先把哈希转换成一个大整数，然后检测它是否小于目标。
 
