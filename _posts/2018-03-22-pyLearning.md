@@ -175,4 +175,11 @@ STR2 STR2 2
 ~~~
 
 
+Retrying (Retry(total=4, connect=None, read=None, redirect=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<pip._vendor.requests.packages.urllib3.connection.HTTPConnection object at 0x03993210>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。',))': http://pypi.douban.com/simple/pygame/
 
+关闭代理。internet设置
+shadow设置
+
+
+pip安装使用豆瓣源
+ pip install pandas -i https://pypi.douban.com/simple
