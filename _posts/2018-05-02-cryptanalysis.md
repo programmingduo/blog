@@ -2,8 +2,8 @@
 layout: post
 title: "密码学皮毛"
 description: "区块链和比特币学习博客"
-categories: [block-chains,bit-coins]
-tags: [block-chains,bit-coins]
+categories: [block-chains]
+tags: [block-chains]
 redirect_from:
   - /2018/05/02/
 ---
