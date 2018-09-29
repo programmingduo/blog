@@ -24,7 +24,7 @@ redirect_from:
 
 这种机制跟现实生活中的情形十分相似：一个人必须努力工作来获得薪酬以维持生活。在区块链中，一些参与者(矿工)通过工作来维持这一网络，为该网络增加区块并且获得酬劳。他们的工作可以使新的区块安全的加入区块链当中，这也保证了整个区块链数据库的安全性和稳定性，保证整个区块链可以不断成长。值得注意的是，矿工必须证明自己完成了他的工作。
 
-整个“完成工作并证明已完成”机制被称为“工作量的证明”(原文："[ proof-of-work](https://en.wikipedia.org/wiki/Proof-of-work_system)")。这个过程需要巨大的计算量（即使是高性能的机器也很难在短时间内完成它）使得该过程十分困难。此外，这一过程也会随着时间而变得越来越困难，以保证每小时增加六个区块的速度。
+整个“完成工作并证明已完成”机制被称为“工作量的证明”(参考wiki："[ proof-of-work](https://en.wikipedia.org/wiki/Proof-of-work_system)")。这个过程需要巨大的计算量（即使是高性能的机器也很难在短时间内完成它）使得该过程十分困难。此外，这一过程也会随着时间而变得越来越困难，以保证每小时增加六个区块的速度。
 
 在比特币中，这一工作的目标是找到区块的哈希值，这一哈希值必须满足一些特定的需要。并且这一哈希值用来完成证明。因此，寻找证明（有效哈希）便是矿工实际的工作。
 
@@ -48,7 +48,7 @@ redirect_from:
 
 # Hashcash
 
-比特币使用[Hashcash](https://en.wikipedia.org/wiki/Hashcash)，一个最初用来防止垃圾邮件的工作量证明算法。它可以被分解为以下步骤：
+比特币使用Hashcash([Hashcash wiki](https://en.wikipedia.org/wiki/Hashcash))，一个最初用来防止垃圾邮件的工作量证明算法。它可以被分解为以下步骤：
 
 * 取一些公开的数据（比如，如果是email的话，它可以是接收者的邮件地址；在比特币中，它是区块头）
 * 给这个公开数据添加一个计数器。计数器默认从 0 开始
@@ -97,7 +97,7 @@ func NewProofOfWork(b *Block) *ProofOfWork {
 }
 ~~~~~
 
-参考网址：
+其中用到函数的参考网址：
 [lsh](https://en.wikipedia.org/wiki/Locality-sensitive_hashing)
 [big](https://golang.org/pkg/math/big/)
 
@@ -287,8 +287,8 @@ PrepareDat ,
 
 // fmt.Println("Mining the block containing \" %s \"", pow.block.Data)
 
-        fmt.Printf("\r%x", hash)
+fmt.Printf("\r%x", hash)
 
-        printf, print, println
+printf, print, println
 
-        NewProofOfWork中为什么结果不同
+NewProofOfWork中为什么结果不同

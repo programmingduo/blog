@@ -16,7 +16,7 @@ redirect_from:
 [Building Blockchain in Go. Part 1: Basic Prototype](https://jeiwan.cc/posts/building-blockchain-in-go-part-1/)
 
 
-# 前言：
+# 前言
 
 区块链是 21 世纪最具革命性的技术之一，它仍然处于不断成长的阶段，而且还有很多潜力尚未显现出来。 本质上，区块链只是一个分布式数据库而已。 不过区块链的独一无二之处在于它是一个公开的数据库，而不是一个私人数据库，也就是说，每个使用它的人都有一个完整或部分的副本。 只有经过其他数据库使用者的同意，才能向数据库中添加新的记录。 此外，也正是由于区块链，才使得加密货币和智能合约成为现实。
 
@@ -81,7 +81,7 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 type Blockchain struct {
     blocks []*Block
 }
-~~~
+~~~~~
 
 这就是我们的第一个区块链！我从来没有想过它会是这么容易。
 
@@ -132,7 +132,7 @@ func main() {
 }
 ~~~~~~
 
-# 输出：
+# 输出
 
 ~~~~
 Prev. hash:
