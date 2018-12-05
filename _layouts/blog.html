@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="{{ site.lang }}">
+
+
+<head>
+    {% include common/meta.html %}
+    <link href='{{ site.baseurl }}/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    {% include common/libraries.html %}
+</head>
+
+<body>
+    {% include common/notices.html %}
+    {% include blog/overlay.html %}
+
+    <div id="page" class="hentry">
+        {% include blog/blog-header.html %}
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        {{ content }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include blog/footer.html %}
+    </div>
+
+    {% include blog/scripts.html %}
+</body>
+
+</html>
