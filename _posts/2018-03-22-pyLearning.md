@@ -11,6 +11,25 @@ redirect_from:
 * Karmdown table of content
 {:toc .toc}
 
+# 环境安装
+
+网上有关教程有很多，这里只写碰到的问题：
+
+1. pip安装过程中使用豆瓣源命令：
+
+~~~
+pip install pandas -i https://pypi.douban.com/simple
+~~~
+
+2. 问题描述如下：
+
+Retrying (Retry(total=4, connect=None, read=None, redirect=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<pip._vendor.requests.packages.urllib3.connection.HTTPConnection object at 0x03993210>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。',))': http://pypi.douban.com/simple/pygame/
+
+解决方法：关闭代理。
+
+不光要在internet中设置，有过使用shadowsocks翻墙经历最好在shadowsocks中也看一下。
+
+
 # 开发手册
 Python安装后自带了一个叫做pydoc.py的文件。使用命令行在Python的安装目录(个人2.7安装路径：C:\Python27\)下lib路径当中，执行命令
 
@@ -121,7 +140,17 @@ re就Python中用于正则表达式相关处理的类，这四个方法都是用
 
 ## search
 
-在string中进行搜索，成功返回Match object, 失败返回None, 只匹配一个。
+函数原型：
+
+~~~
+re.search(pattern, string, flags=0)
+~~~
+
+pattern 匹配的正则表达式
+string  要匹配的字符串。
+flags   标志位，用于控制正则表达式的匹配方式，如：是否区分大小写，多行匹配等等。
+
+功能：在string中进行搜索，成功返回Match object, 失败返回None, 只匹配一个。
 
 ## findall
 
@@ -174,20 +203,7 @@ STR1 STR1 1
 STR2 STR2 2
 ~~~
 
-# 环境安装
 
-网上有关教程有很多，这里只写碰到的问题：
+# excel 中的应用
 
-1. pip安装过程中使用豆瓣源命令：
-
-~~~
-pip install pandas -i https://pypi.douban.com/simple
-~~~
-
-2. 问题描述如下：
-
-Retrying (Retry(total=4, connect=None, read=None, redirect=None)) after connection broken by 'ProxyError('Cannot connect to proxy.', NewConnectionError('<pip._vendor.requests.packages.urllib3.connection.HTTPConnection object at 0x03993210>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。',))': http://pypi.douban.com/simple/pygame/
-
-解决方法：关闭代理。
-
-不光要在internet中设置，有过使用shadowsocks翻墙经历最好在shadowsocks中也看一下。
+参考博客：[传送门](https://www.cnblogs.com/insane-Mr-Li/p/9092619.html)
