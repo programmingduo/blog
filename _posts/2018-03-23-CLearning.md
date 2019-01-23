@@ -11,6 +11,50 @@ redirect_from:
 * Karmdown table of content
 {:toc .toc}
 
+# 内存申请与释放
+
+{% highlight C++ %}
+Ptr = (char *)malloc(100 * sizeof(char));
+free(Ptr);
+{% endhighlight %}
+
+# 文件读取
+
+## open
+
+{% highlight C++ %}
+int open(const char * pathname, int flags);
+{% endhighlight %}
+
+O_RDONLY 以只读方式打开文件
+O_WRONLY 以只写方式打开文件
+O_RDWR 以可读写方式打开文件. 上述三种flag是互斥的, 也就是不可同时使用,
+
+注：
+
+{% highlight C++ %}
+#include <fcntl.h>
+{% endhighlight %}
+
+解决 O_RDONLY was not declared
+
+## read
+
+{% highlight C++ %}
+ssize_t read(int fd, void * buf, size_t count);
+{% endhighlight %}
+
+1. 如果成功，返回读取的字节数；
+2. 如果出错，返回-1并设置errno；
+3. 如果在调read函数之前已是文件末尾，则返回0
+4. 函数的参数【int fd】： 这个是文件指针
+5. 函数的参数【void *buf】： 读上来的数据保存在缓冲区buf中，同时文件的当前读写位置向后移
+6. 函数的参数【size_t count】： 是请求读取的字节数。若参数count 为0, 则read()不会有作用并返回0. 返回值为实际读取到的字节数, 如果返回0
+
+函数的使用注意事项：
+
+如果顺利 read()会返回实际读到的字节数, 最好能将返回值与参数count 作比较, 若返回的字节数比要求读取的字节数少, 则有可能读到了文件尾
+
 # 多进程
 
 这部分建议在linux上进行编程，windows编程会出现函数未声明的问题。
@@ -406,10 +450,56 @@ thread2: main thread exit!
 thread2: exit!
 thread2: process exit!
 
-## 程之间的同步与互斥
+## 线程之间的同步与互斥
 
+### mutex
+
+* int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+* int pthread_cond_init(pthread_cond_t *cv, const pthread_condattr_t *cattr);
 * pthread_mutex_lock(&qlock);    
 * pthread_cond_wait(&qready, &qlock);
 * pthread_mutex_unlock(&qlock);
 
-https://blog.csdn.net/dddddz/article/details/8619141
+[参考博客](https://blog.csdn.net/dddddz/article/details/8619141)
+
+踩过的坑：
+
+![smiley](\assets\images\usedInBlogs\Clearning\6.png)
+![smiley](\assets\images\usedInBlogs\Clearning\7.png)
+![smiley](\assets\images\usedInBlogs\Clearning\8.png)
+
+可以看到，后面两个图中的代码都调用了pthread_cond_wait(),而只有在第一个图中调用pthread_cond_signal()。如果后两个线程先调用，第一个线程后调用，则势必导致后两个线程中有一个死锁。解决方案：第一个图中代码不变，后两个图中代码一次更改为：
+
+![smiley](\assets\images\usedInBlogs\Clearning\9.png)
+![smiley](\assets\images\usedInBlogs\Clearning\10.png)
+
+### semaphore 
+
+semaphore 的这种信号量不仅可用于同一进程的线程同步，也可以用于不同进程间同步。
+
+函数原型：
+
+{% highlight C++ %}
+extern int sem_init __P (sem_t *__sem, int __pshared, unsigned int __value);
+{% endhighlight %}
+
+* sem为指向信号量结构的一个指针；
+* pshared不为０时此信号量在进程间共享，否则只能为当前进程的所有线程共享；
+* value给出了信号量的初始值。　　
+
+* 函数sem_post( sem_t *sem )用来增加信号量的值。当有线程阻塞在这个信号量上时，调用这个函数会使其中的一个线程不在阻塞，选择机制同样是由线程的调度策略决定的。　　
+* 函数sem_wait( sem_t *sem )被用来阻塞当前线程直到信号量sem的值大于0，解除阻塞后将sem的值减一，表明公共资源经使用后减少。函数sem_trywait ( sem_t *sem )是函数sem_wait（）的非阻塞版本，它直接将信号量sem的值减一。　　
+* 函数sem_destroy(sem_t *sem)用来释放信号量sem。　
+
+# 封装
+
+## 基础知识
+
+### extern与static
+
+extern和static是C语言中的两个修饰符，extern可用于修饰函数或者变量，表示该变量或者函数在其他文件中进行了定义；static也可用于修饰函数或者变量，表示该函数或者变量只能在该文件中使用。可利用它们对数据或者函数进行隐藏或者限制访问权限。
+
+### 函数指针
+
+函数指针是指针的一种，它指向函数的首地址（函数的函数名即为函数的首地址），可以通过函数指针来调用函数。
+
