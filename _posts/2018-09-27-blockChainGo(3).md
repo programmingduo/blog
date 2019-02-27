@@ -68,7 +68,7 @@ BoltDB是一种键值对存储的数据库，这意味着它不并不像SQL RDBM
 
 * key	value
 * c + 32 字节的 transaction hash	unspent transaction output record for that transaction
-* B	32 字节的 block hash: the block hash up to which the database represents the unspent transaction outputs
+* B	+ 32 字节的 block hash: the block hash up to which the database represents the unspent transaction outputs
 
 因为目前还没有交易，所以我们只需要 blocks bucket。另外，正如上面提到的，我们会将整个数据库存储为单个文件，而不是将区块存储在不同的文件中。所以，我们也不会需要文件编号（file number）相关的东西。最终，我们会用到的键值对有：
 

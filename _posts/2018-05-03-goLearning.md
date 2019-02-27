@@ -119,7 +119,7 @@ func (p myType ) funcName ( a, b int , c string ) ( r , s int ) {
 >
 > 方法名——funcName
 >
-> 入参——— a,b int,b string
+> 入参——— a,b int,c string
 >
 > 返回值—— r,s int
 >
@@ -221,6 +221,105 @@ var p Person // Person{0, "", nil}
 ~~~~
 
 详见于[go语言中文网](https://studygolang.com/articles/9506)
+
+## for
+
+Go语言仅有for一种循环语句，但常用方式都能支持。
+
+其中初始化表达式支持函数调用或定义局部变量，需要注意的是初始化语句中的函数仅执行一次，条件表达式中的函数重复执行，规避方式就是在初始化表达式中定义局部变量保存函数返回结果。
+
+Go语言中也有goto语句，使用goto语句前，必须先定义标签，标签区分大小写，并且未使用的标签会引发编译错误。和goto定点跳转不同，break、continue用于中断代码块执行。break用于switch、for、select语句，终止整个语句块执行，continue仅用于for循环，终止后续逻辑，立即进入下一轮循环。break和continue配合标签使用，可以在多层嵌套中指定目标层级。
+
+~~~go
+
+package main
+
+import (
+    "fmt"
+)
+
+// count函数
+func count() int {
+    fmt.Println("count.") // 打印字符串用来查看count函数执行次数
+    return 3
+}
+
+// main函数
+func main() {
+    // for循环
+    // 初始化表达式，支持函数调用或定义局部变量
+    for i := 0; i < 10; i++ {
+        fmt.Println(i)
+    }
+    // 类似while循环
+    i := 0
+    for i < 10 {
+        fmt.Println(i)
+        i++
+    }
+    // 类似无限循环
+    for {
+        break
+    }
+    // 初始化语句中的count函数仅执行一次
+    for i, c := 0, count(); i < c; i++ {
+        fmt.Println("a", i)
+    }
+
+    c := 0
+    // 条件表达式中的count函数重复执行
+    for c < count() {
+        fmt.Println("b", c)
+        c++
+    }
+    // 规避条件表达式中的count函数重复执行，在初始化表达式中定义局部变量保存count函数返回结果
+    count := count()
+    d := 0
+    for d < count {
+        fmt.Println("c", d)
+        d++
+    }
+    // goto定点跳转
+    // 须先定义标签,并且未用到的标签会引发编译错误
+    // 不能跳转到其它函数，或内层代码块内
+    for i := 0; i < 10; i++ {
+        fmt.Println(i)
+        if i > 5 {
+            goto exit
+        }
+    }
+exit:
+    fmt.Println("exit.")
+
+    // break 用户switch、for、select语句，终止整个语句块执行。continue 仅用于for循环，终止后续逻辑，立即进入下一轮循环
+    for i := 0; i < 10; i++ {
+        if i%2 == 0 {
+            continue // 立即进入下一轮循环
+        }
+        if i > 5 {
+            break // 立即终止整个for循环
+        }
+        fmt.Println(i)
+    }
+    // 配合标签，break和continue可在多层嵌套中指定目标层级
+outer:
+    for i := 0; i < 5; i++ {
+        for j := 0; j < 10; j++ {
+            if j > 2 {
+                fmt.Println()
+                continue outer
+            }
+
+            if i > 2 {
+                break outer
+            }
+            fmt.Print(i, ":", j, " ")
+        }
+    }
+
+}
+
+~~~~
 
 ## boltdb
 
