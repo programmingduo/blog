@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building Blockchain in Go. Part 4: Basic Prototype"
+title: "Building Blockchain in Go. Part 1: Basic Prototype"
 description: "区块链和比特币学习博客"
 categories: [block-chains]
 tags: [block-chains,golang]
