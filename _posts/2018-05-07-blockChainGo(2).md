@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "block chain go (2)：Proof-of-Work"
+title: "Building Blockchain in Go. Part 2: Proof-of-Work"
 description: "区块链和比特币学习博客"
 categories: [block-chains]
 tags: [block-chains,golang]
