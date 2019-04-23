@@ -29,6 +29,10 @@ Retrying (Retry(total=4, connect=None, read=None, redirect=None)) after connecti
 
 不光要在internet中设置，有过使用shadowsocks翻墙经历最好在shadowsocks中也看一下。
 
+# 编译器安装
+
+这里推荐sublime + Anaconda + SublimeREPL
+[传送门](https://www.jianshu.com/p/a401a0bfddf7)
 
 # 开发手册
 Python安装后自带了一个叫做pydoc.py的文件。使用命令行在Python的安装目录(个人2.7安装路径：C:\Python27\)下lib路径当中，执行命令
@@ -46,6 +50,16 @@ localhost:8787
 便可阅读该文档了。
 
 # 输入输出
+
+# 输入
+
+~~~python
+input([prompt])
+~~~~
+
+从控制台读取一行数据，包括空格
+
+对于python3来讲，返回值为一个string。
 
 ## 输出到控制台
 
@@ -130,7 +144,19 @@ open函数可以打开或者创建文件，第二个参数是文件权限。w表
 而若参数为"a"则会在文件尾部添加新内容。
 
 
-# 正则匹配
+# 字符串处理与正则匹配
+
+## split
+
+~~~python
+str.split(str="", num=string.count(str)).
+~~~~
+
+参数：
+
+> str -- 分隔符，默认为所有的空字符，包括空格、换行(\n)、制表符(\t)等。
+> 
+> num -- 分割次数。默认为 -1, 即分隔所有。
 
 re就Python中用于正则表达式相关处理的类，这四个方法都是用于匹配字符串的，具体区别如下：
 
@@ -207,3 +233,6 @@ STR2 STR2 2
 # excel 中的应用
 
 参考博客：[传送门](https://www.cnblogs.com/insane-Mr-Li/p/9092619.html)
+
+# 实用内置函数
+

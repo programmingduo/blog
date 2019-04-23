@@ -670,7 +670,7 @@ func (cli *CLI) send(from, to string, amount int){
 
 ![smiley](\assets\images\usedInBlogs\blockChainGo\4\5.png)
 
-# 参考：
+# 参考
 
 本章节代码参考：https://github.com/Jeiwan/blockchain_go/tree/part_4
 
