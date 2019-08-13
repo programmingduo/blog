@@ -11,6 +11,33 @@ redirect_from:
 * Karmdown table of content
 {:toc .toc}
 
+# 关键字
+
+## explicit
+
+~~~C++
+class String {
+       explicit String ( int n ); //本意是预先分配n个字节给字符串
+	String ( const char* p ); // 用C风格的字符串p作为初始化值
+}
+~~~~
+
+加上explicit，就抑制了String ( int n )的隐式转换，
+
+## const
+
+~~~C++
+class MyClass
+{ 
+  public: 
+      int GetData(int Id,int Type,char* pData)const;
+}
+~~~~~
+
+通过把类成员函数声明为const   以表明它们不修改类对象。
+
+任何不会修改数据成员的函数都应该声明为const类型。如果在编写const成员函数时，不慎修改了数据成员，或者调用了其它非const成员函数，编译器将指出错误，这样做的好处是提高程序了的健壮性。
+
 # 内存申请与释放
 
 {% highlight C++ %}
@@ -503,3 +530,65 @@ extern和static是C语言中的两个修饰符，extern可用于修饰函数或�
 
 函数指针是指针的一种，它指向函数的首地址（函数的函数名即为函数的首地址），可以通过函数指针来调用函数。
 
+# STL
+
+根据“数据在容器中的排列”特性，数据结构分为序列式和关联式两种。STL中序列式容器有：vector，list，deque，stack，queue，heep，priority_queue，slist。关联式容器有：树，RB-tree（红黑树），set，map，multiset，multimap，hashtable，hash_set，hast_map，hash_multiset，hash_multimap。
+
+## vector
+
+array是静态空间，vector是动态空间。
+vector的实现技术关键在于对大小的控制以及重新配置时数据移动效率。
+vector维护的是一个连续线性空间。
+vector的迭代器与指针一样。所以vector<int>::iterator it中it的类型就是int*。
+
+成员函数：
+
+{% highleight C++ %}
+template <class T, class Alloc = alloc>
+class vector{
+	protecte:
+		iterator start;
+		iterator finish;
+		iterator end_of_storage;
+
+	public:
+		typedef T value_type;
+		typedef value_type* iterator;
+		typedef value_type* pointer;
+		typedef value_type& reference;
+
+	public:
+		//constructions:
+		explicit vector (const allocator_type& alloc = allocator_type());
+		//默认构造函数	
+		explicit vector (size_type n);
+		//分配空间为n个元素
+        explicit vector (size_type n, const value_type& val,
+                 const allocator_type& alloc = allocator_type());
+        //分配n个元素的空间并且赋初值为val。
+        vector (const vector& x);
+        //copy
+		vector (const vector& x, const allocator_type& alloc);
+		//copy
+		template <class InputIterator>
+  		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
+  		//don't know
+  		vector (vector&& x);
+		vector (vector&& x, const allocator_type& alloc);
+		//move still don't know
+		vector (initializer_list<value_type> il, const allocator_type& alloc = allocator_type());
+		//initialer list always don't know
+
+		iterator begin(){reurn start;}
+		iteratot end(){return finish;}
+		size_type size() const {return size_type(end() - begin());}
+		size_type capacity() const{return size_type(end_of_storage - begin());}
+		bool empty() const {return begin() == end();}
+		reference operator[](size_type n){return *(begin() + n);}
+
+		reference front(){ return *begin();}
+		reference back(){ return *(end() - 1);}
+
+		void push_back(const T& x){}
+		//首先检查是否还有备用空间，如果有直接在备用空间上构造元素，并调整迭代器finish，是vector变大。如果没有则需要先扩充空间（重新配置，移动元素，释放源空间）。
+}
