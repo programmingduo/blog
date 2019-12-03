@@ -236,3 +236,47 @@ STR2 STR2 2
 
 # 实用内置函数
 
+## numpy
+
+### 创建
+
+~~~python
+a = np.array([2,3,4])
+b = np.array([2.0,3.0,4.0])
+c = np.array([[1.0,2.0],[3.0,4.0]])
+d = np.array([[1,2],[3,4]], dtype = complex) # 指定数据类型
+~~~~
+
+### 常用函数
+~~~python
+print np.arange(0,7,1,dtype = np.int16) # 0为起点，间隔为1时可缺省(引起歧义下不可缺省)
+print np.ones((2,3,4),dtype = np.int16) # 2页，3行，4列，全1，指定数据类型
+print np.zeros((2,3,4)) # 2页，3行，4列，全0
+print np.empty((2,3)) #值取决于内存
+print np.arange(0,10,2) # 起点为0，不超过10，步长为2
+print np.linspace(-1,2,5) # 起点为-1，终点为2，取5个点
+print np.random.randint(0,3,(2,3)) # 大于等于0，小于3，2行3列的随机整数
+~~~~
+
+使用 np.c_[] 和 np.r_[] 分别添加行和列
+
+~~~python
+a = np.array([[1,2,3],[4,5,6],[7,8,9]])
+b = np.ones(3)
+np.c_[a,b]
+array([[ 1.,  2.,  3.,  1.],
+    [ 4.,  5.,  6.,  1.],
+    [ 7.,  8.,  9.,  1.]])
+~~~~
+
+~~~py
+
+x = np.array([[1,2,5],[2,3,5],[3,4,5],[2,3,6]])
+#输出数组的行和列数
+print x.shape  #结果： (4, 3)
+#只输出行数
+print x.shape[0] #结果： 4
+#只输出列数
+print x.shape[1] #结果： 3
+
+~~~~
