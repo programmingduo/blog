@@ -348,13 +348,6 @@ re就Python中用于正则表达式相关处理的类，这四个方法都是用
 
 匹配string 开头，成功返回Match object, 失败返回None，只匹配一个。
 
-## match 对象
-
-group()   用于获得某个匹配组的字符串，默认为0，返回所有组的匹配结果
-groups()    返回匹配的所有组组成的元组
-start()   用于获取分组匹配的子串在整个字符串中的起始索引
-end()   用于获取分组匹配的子串在整个字符串中的结束索引
-span()    返回 (start(), end())这个的元组
 
 ## search
 
@@ -514,6 +507,8 @@ print(end - start)
 
 ## 其他
 
+### enumerate 函数
+
 ~~~python
 enumerate(sequence, [start=0])
 ~~~~
@@ -536,4 +531,18 @@ for i, element in enumerate(seq):
 #0 one
 #1 two
 #2 three
+~~~~
+
+### 边边角角
+
+int最大最小值：
+
+~~~python
+import sys
+MAX_INT = sys.maxsize
+print(MAX_INT)
+print(-sys.maxint - 1)
+
+max_float=float('inf')
+print(max_float)
 ~~~~
