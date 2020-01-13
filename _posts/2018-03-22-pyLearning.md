@@ -49,9 +49,60 @@ localhost:8787
 
 便可阅读该文档了。
 
+# 基础基础之基础
+
+这一章记录一些不值得单独拿出来成章的知识。
+
+## 除法
+
+/  除法计算结果是浮点数，即使是两个整数恰好整除，结果也是浮点数：
+
+还有一种除法是//，称为地板除，两个整数的除法仍然是整数
+
+Python还提供一个余数运算，可以得到两个整数相除的余数：
+
+~~~python
+>>> 9 / 3
+3.0
+
+>>> 10 // 3
+3
+
+~~~~
+
+## 编码
+
+这个部分的坑掉了很多次了。记录一下。
+
+ASCII编码： 由于计算机是美国人发明的，因此，最早只有127个字符被编码到计算机里，也就是大小写英文字母、数字和一些符号，比如大写字母A的编码是65，小写字母z的编码是122。
+
+GB2312编码： 由于要处理中文显然一个字节是不够的，至少需要两个字节，而且还不能和ASCII编码冲突，所以，中国制定了GB2312编码，用来把中文编进去。
+
+Unicode编码： 你可以想得到的是，全世界有上百种语言，日本把日文编到Shift_JIS里，韩国把韩文编到Euc-kr里，各国有各国的标准，就会不可避免地出现冲突，结果就是，在多语言混合的文本中，显示出来会有乱码。Unicode把所有语言都统一到一套编码里，这样就不会再有乱码问题了。
+
+UTF-8： 新的问题又出现了：如果统一成Unicode编码，乱码问题从此消失了。但是，如果你写的文本基本上全部是英文的话，用Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上就十分不划算。所以，本着节约的精神，又出现了把Unicode编码转化为“可变长编码”的UTF-8编码。UTF-8编码把一个Unicode字符根据不同的数字大小编码成1-6个字节，常用的英文字母被编码成1个字节，汉字通常是3个字节，只有很生僻的字符才会被编码成4-6个字节。如果你要传输的文本包含大量英文字符，用UTF-8编码就能节省空间：
+
+
+字符  ASCII   Unicode UTF-8
+A   01000001    00000000 01000001   01000001
+中   x   01001110 00101101   11100100 10111000 10101101
+
+Python对bytes类型的数据用带b前缀的单引号或双引号表示
+
+~~~python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+~~~~
+第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；
+
+第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。
+
 # 输入输出
 
-# 输入
+## 输入
 
 ~~~python
 input([prompt])
@@ -60,6 +111,70 @@ input([prompt])
 从控制台读取一行数据，包括空格
 
 对于python3来讲，返回值为一个string。
+
+### read()
+
+read()是最简单的一种方法，一次性读取文件的所有内容放在一个大字符串中，即存在内存中
+
+~~~py
+    file_object = open('test.txt') //不要把open放在try中，以防止打开失败，那么就不用关闭了
+    try:
+    file_context = file_object.read() //file_context是一个string，读取完后，就失去了对test.txt的文件引用
+    # file_context = open(file).read().splitlines()
+    # file_context是一个list，每行文本内容是list中的一个元素
+    finally:
+    file_object.close()
+    #除了以上方法，也可用with、contextlib都可以打开文件，且自动关闭文件，
+    #以防止打开的文件对象未关闭而占用内存
+~~~~
+read()的利端：
+方便、简单
+一次性独读出文件放在一个大字符串中，速度最快
+read()的弊端：
+文件过大的时候，占用内存会过大
+
+### readline()：
+readline()逐行读取文本，结果是一个list
+
+~~~py
+with open(file) as f:
+line = f.readline()
+while line:
+    print line
+    line = f.readline()
+~~~~
+
+readline()的利端：
+占用内存小，逐行读取
+readline()的弊端：
+由于是逐行读取，速度比较慢
+
+### readlines()：
+
+readlines()一次性读取文本的所有内容，结果是一个list
+
+~~~py
+with open(file) as f:
+for line in f.readlines():
+print line
+这种方法读取的文本内容，每行文本末尾都会带一个'\n'换行符 (可以使用L.rstrip('\n')去掉换行符）
+~~~~
+
+readlines()的利端：
+一次性读取文本内容，速度比较快
+readlines()的弊端：
+随着文本的增大，占用内存会越来越多
+
+### 最简单、最快速的逐行处理文本的方法：直接for循环文件对象
+
+~~~py
+file_object = open('test.txt','rU')
+try: 
+    for line in file_object:
+         do_somthing_with(line)//line带"\n"
+finally:
+     file_object.close()
+~~~
 
 ## 输出到控制台
 
@@ -133,7 +248,8 @@ print('a',file=f,flush=True)
 
 ~~~~python
 f = open("out.txt", "w")
-print ("test", file=f)
+print ("test", file=f)  #3+
+p.write("pangwei is a sunny big boy"+"\n")  #2.7
 f.close
 ~~~~~~~~~
 
@@ -145,6 +261,74 @@ open函数可以打开或者创建文件，第二个参数是文件权限。w表
 
 
 # 字符串处理与正则匹配
+
+## 中文标点符号转化为英文
+
+~~~python
+import unicodedata
+t = '中国，中文，标点符号！你好？１２３４５＠＃【】+=-（）'
+t2 = unicodedata.normalize('NFKC', t.decode('utf-8')).encode('utf-8')
+'''
+>>> print t2
+中国,中文,标点符号!你好?12345@#【】+=-()
+
+~~~~
+
+## 格式化字符串
+
+python 字符串格式化符号:
+
+    符   号   描述
+      %c     格式化字符及其ASCII码
+      %s     格式化字符串
+      %d     格式化整数
+      %u     格式化无符号整型
+      %o     格式化无符号八进制数
+      %x     格式化无符号十六进制数
+      %X     格式化无符号十六进制数（大写）
+      %f     格式化浮点数字，可指定小数点后的精度
+      %e     用科学计数法格式化浮点数
+      %E     作用同%e，用科学计数法格式化浮点数
+      %g     %f和%e的简写
+      %G     %F 和 %E 的简写
+      %p     用十六进制数格式化变量的地址
+
+## 将字符串中的中文标点转换为英文标点
+
+~~~python 
+def punc_filter(text):
+    string = re.sub(r'<.*?>'.decode("utf8"), ''.decode("utf8"), text)
+    string=re.sub("[\s+\.\!\/\-_,$%^*()+\"\']+|[\丨〖〗「」‘’〜+——！？?、~@#￥%……&*（）:：；．～]+".decode("utf8"), "".decode("utf8"), string)
+
+    return string
+~~~~
+
+
+## Python三引号
+
+三引号让程序员从引号和特殊字符串的泥潭里面解脱出来，自始至终保持一小块字符串的格式是所谓的WYSIWYG（所见即所得）格式的。
+
+一个典型的用例是，当你需要一块HTML或者SQL时，这时当用三引号标记，使用传统的转义字符体系将十分费神。
+
+~~~py
+
+errHTML = '''
+<HTML><HEAD><TITLE>
+Friends CGI Demo</TITLE></HEAD>
+<BODY><H3>ERROR</H3>
+<B>%s</B><P>
+<FORM><INPUT TYPE=button VALUE=Back
+ONCLICK="window.history.back()"></FORM>
+</BODY></HTML>
+'''
+cursor.execute('''
+CREATE TABLE users (  
+login VARCHAR(8), 
+uid INTEGER,
+prid INTEGER)
+''')
+
+~~~~
 
 ## split
 
@@ -163,6 +347,14 @@ re就Python中用于正则表达式相关处理的类，这四个方法都是用
 ## match
 
 匹配string 开头，成功返回Match object, 失败返回None，只匹配一个。
+
+## match 对象
+
+group()   用于获得某个匹配组的字符串，默认为0，返回所有组的匹配结果
+groups()    返回匹配的所有组组成的元组
+start()   用于获取分组匹配的子串在整个字符串中的起始索引
+end()   用于获取分组匹配的子串在整个字符串中的结束索引
+span()    返回 (start(), end())这个的元组
 
 ## search
 
@@ -185,6 +377,10 @@ flags   标志位，用于控制正则表达式的匹配方式，如：是否区
 ## finditer
 
 在string中查找所有匹配成功的字符串,返回iterator，每个item是一个Match object。
+
+## 特殊字符
+
+https://www.runoob.com/python/python-reg-expressions.html
 
 ## 样例代码
 
@@ -247,7 +443,7 @@ c = np.array([[1.0,2.0],[3.0,4.0]])
 d = np.array([[1,2],[3,4]], dtype = complex) # 指定数据类型
 ~~~~
 
-### 常用函数
+### 内置函数
 ~~~python
 print np.arange(0,7,1,dtype = np.int16) # 0为起点，间隔为1时可缺省(引起歧义下不可缺省)
 print np.ones((2,3,4),dtype = np.int16) # 2页，3行，4列，全1，指定数据类型
@@ -279,4 +475,65 @@ print x.shape[0] #结果： 4
 #只输出列数
 print x.shape[1] #结果： 3
 
+~~~~
+
+## 纬度范围表示
+
+[1:]   意思是去掉列表中第一个元素（下标为0），去后面的元素进行操作，以一个示例题为例，用在遍历中统计个数：
+[::-1]  从最后一个元素到第一个元素复制一遍
+a[i:j] 表示复制a[i]到a[j-1]
+a[i:j:s] 表示复制a[i]到a[j-1]，但s表示步进，缺省为1.
+
+## counter
+
+Counter 集成于 dict 类，因此也可以使用字典的方法，此类返回一个以元素为 key 、元素个数为 value 的 Counter 对象集合
+
+~~~py
+import collections
+obj = collections.Counter('aabbccc')
+print(obj)
+
+#输出：Counter({'c': 3, 'a': 2, 'b': 2})
+
+~~~~
+
+## 时间
+
+~~~py
+import datetime
+
+start = datetime.datetime.now()
+for i in range(1000):
+    for j in range(500):
+        m = i + j
+        print(m)
+end = datetime.datetime.now()
+print(end - start)
+# 0:00:03.952226
+~~~~
+
+## 其他
+
+~~~python
+enumerate(sequence, [start=0])
+~~~~
+
+sequence -- 一个序列、迭代器或其他支持迭代对象。
+start -- 下标起始位置
+
+
+~~~python
+seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+list(enumerate(seasons))
+#[(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]
+list(enumerate(seasons, start=1))       # 下标从 1 开始
+#[(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]
+
+seq = ['one', 'two', 'three']
+for i, element in enumerate(seq):
+    print i, element
+
+#0 one
+#1 two
+#2 three
 ~~~~
