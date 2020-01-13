@@ -3,7 +3,7 @@ layout: post
 title: "C++ learning"
 description: "个人学习C笔记"
 categories: [language]
-tags: [C++]
+tags: []
 redirect_from:
   - /2018/03/23/
 ---
