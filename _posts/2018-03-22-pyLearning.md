@@ -49,7 +49,7 @@ localhost:8787
 
 便可阅读该文档了。
 
-# 基础基础之基础
+# 基础之基础
 
 这一章记录一些不值得单独拿出来成章的知识。
 
@@ -260,7 +260,7 @@ open函数可以打开或者创建文件，第二个参数是文件权限。w表
 而若参数为"a"则会在文件尾部添加新内容。
 
 
-# 字符串处理与正则匹配
+# 字符串
 
 ## 中文标点符号转化为英文
 
@@ -330,19 +330,9 @@ prid INTEGER)
 
 ~~~~
 
-## split
+# 正则匹配
 
-~~~python
-str.split(str="", num=string.count(str)).
-~~~~
-
-参数：
-
-> str -- 分隔符，默认为所有的空字符，包括空格、换行(\n)、制表符(\t)等。
-> 
-> num -- 分割次数。默认为 -1, 即分隔所有。
-
-re就Python中用于正则表达式相关处理的类，这四个方法都是用于匹配字符串的，具体区别如下：
+注意：re中两个字符串的编码一定得是一样的
 
 ## match
 
@@ -506,6 +496,23 @@ print(end - start)
 ~~~~
 
 ## 其他
+
+### 内存相关
+
+~~~python
+
+import psutil
+import os
+
+def memory_usage():
+  mem_available = psutil.virtual_memory().available
+  mem_process = psutil.Process(os.getpid()).memory_info().rss
+  return round(mem_process / 1024 / 1024, 2), round(mem_available / 1024 / 1024, 2)
+
+print(memory_usage(), flush = True)
+a = np.random.rand(100, 1024, 1024)
+print(memory_usage())
+~~~~
 
 ### enumerate 函数
 
