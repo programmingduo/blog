@@ -413,6 +413,17 @@ STR2 STR2 2
 
 参考博客：[传送门](https://www.cnblogs.com/insane-Mr-Li/p/9092619.html)
 
+
+# logging
+
+
+~~~python
+logging.basicConfig(level = logging.ERROR,format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+~~~~
+
+
 # 实用内置函数
 
 ## numpy
