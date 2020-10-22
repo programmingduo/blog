@@ -233,21 +233,6 @@ tf.div 返回的张量的类型与第一个参数类型一致
 http://c.biancheng.net/view/1887.html
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # random 常用函数介绍
 
 ## 正态随机分布
