@@ -13,6 +13,8 @@ redirect_from:
 
 # 安装 Ruby
 
+## win
+
 Jekyll是一款基于Ruby的插件，安装Ruby是必须的. 
 1. 下载，传送阵：<http://rubyinstaller.org/downloads/>
 2. 点击版本并下载，（千万不要下载2.5.x的版本，我第一次下了最新版，然后一路安装最后发现版本不匹配，全部删了重新安装的）。这里我下载的是：“Ruby 2.3.3 (x64)”  
@@ -22,6 +24,17 @@ Jekyll是一款基于Ruby的插件，安装Ruby是必须的.
 * 选中“Add Ruby executables to your PATH”这样将自动完成环境变量的配置。
 
 ### 完成后进入“CMD”输入“ruby -v”如显示版本则代表安装成功。
+
+## mac
+
+mac 自带ruby，但是可能需要升级。升级方法：
+
+~~~
+brew install ruby
+vi .bashrc
+export PATH=/usr/local/Cellar/ruby/2.5.1/bin:$PATH
+source .bashrc
+~~~~
 
 # 安装 DevKit
 
@@ -57,6 +70,9 @@ ruby dk.rb install
 ~~~~~~~~~~~~~
 
 # 安装 Jekyll
+
+## win
+
 首先确保 gem 已经正确安装
 
 命令输入
@@ -74,6 +90,12 @@ gem -v
 
 //命令行执行
 gem install jekyll
+
+## mac
+
+~~~~
+gem install jekyll bundler
+~~~~
 
 # 启动jekyll
 按照官方的 Jekyll 快速开始手册 的步骤， 一个新的 Jekyll 博客可以被建立并在localhost:4000浏览。

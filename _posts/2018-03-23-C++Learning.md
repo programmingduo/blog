@@ -3,7 +3,7 @@ layout: post
 title: "C++ learning"
 description: "个人学习C笔记"
 categories: [language]
-tags: [C++]
+tags: []
 redirect_from:
   - /2018/03/23/
 ---
@@ -544,7 +544,7 @@ vector的迭代器与指针一样。所以vector<int>::iterator it中it的类型
 
 成员函数：
 
-{% highleight C++ %}
+{% highlight C++ %}
 template <class T, class Alloc = alloc>
 class vector{
 	protecte:
@@ -593,3 +593,4 @@ class vector{
 		void push_back(const T& x){}
 		//首先检查是否还有备用空间，如果有直接在备用空间上构造元素，并调整迭代器finish，是vector变大。如果没有则需要先扩充空间（重新配置，移动元素，释放源空间）。
 }
+{% endhighlight %}
