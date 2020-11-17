@@ -119,13 +119,13 @@ read()是最简单的一种方法，一次性读取文件的所有内容放在�
 ~~~py
     file_object = open('test.txt') //不要把open放在try中，以防止打开失败，那么就不用关闭了
     try:
-    file_context = file_object.read() //file_context是一个string，读取完后，就失去了对test.txt的文件引用
-    # file_context = open(file).read().splitlines()
-    # file_context是一个list，每行文本内容是list中的一个元素
+      file_context = file_object.read() //file_context是一个string，读取完后，就失去了对test.txt的文件引用
+      # file_context = open(file).read().splitlines()
+      # file_context是一个list，每行文本内容是list中的一个元素
     finally:
-    file_object.close()
-    #除了以上方法，也可用with、contextlib都可以打开文件，且自动关闭文件，
-    #以防止打开的文件对象未关闭而占用内存
+      file_object.close()
+      #除了以上方法，也可用with、contextlib都可以打开文件，且自动关闭文件，
+      #以防止打开的文件对象未关闭而占用内存
 ~~~~
 read()的利端：
 方便、简单
@@ -564,3 +564,18 @@ print(-sys.maxint - 1)
 max_float=float('inf')
 print(max_float)
 ~~~~
+
+
+# 高级语法
+
+## 列表生成式的工作过程
+
+格式： [experssion for i in sequence if...]
+
+工作过程：
+
+  迭代序列sequence中的每个元素，每次迭代都先判断if表达式结果为真，如果为真则进行下一步，如果为假则进行下一次迭代；
+
+  把迭代结果赋值给i，然后通过experssion得到一个新的计算值；
+
+  最后把所有通过experssion得到的计算值以一个新列表的形式返回。
