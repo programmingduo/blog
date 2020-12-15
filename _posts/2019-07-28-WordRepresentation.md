@@ -2,7 +2,7 @@
 layout: post
 title: "Word Representation"
 description: "frequently used word representation methods"
-categories: [nlp]
+categories: [NLP]
 tags: [word representation]
 redirect_from:
   - /2019/07/28/
@@ -33,7 +33,7 @@ redirect_from:
 > 2. huangshi central hospital 病历中的主诉、现病史，各1.8w条。
 > 补充： 还有一些其他可以找到的数据，但是我这里没用。可以参考博客https://blog.csdn.net/qq_27590277/article/details/108031071
 
-分词过程推荐以下两款工具。
+分词过程推荐以下两款工具：
 > 1. jieba，使用说明可见于[官方github](https://github.com/fxsjy/jieba/)
 > 2. PKUSEG。使用说明见[官方github](https://github.com/lancopku/pkuseg-python)
 

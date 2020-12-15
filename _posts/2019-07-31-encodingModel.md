@@ -2,7 +2,7 @@
 layout: post
 title: "encoding model"
 description: "encoding model"
-categories: [nlp]
+categories: [NLP]
 tags: [encoding model]
 redirect_from:
   - /2019/07/31/

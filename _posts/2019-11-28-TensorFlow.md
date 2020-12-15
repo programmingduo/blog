@@ -2,8 +2,8 @@
 layout: post
 title: "TensorFlow"
 description: "TensorFlow learning"
-categories: [nlp]
-tags: [encoding model]
+categories: [DL]
+tags: []
 redirect_from:
   - /2019/11/28/
 ---
