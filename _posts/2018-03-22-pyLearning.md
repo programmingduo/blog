@@ -428,17 +428,13 @@ logger.setLevel(logging.DEBUG)
 
 ## numpy
 
-### 创建
+### 创建及初始化
 
 ~~~python
 a = np.array([2,3,4])
 b = np.array([2.0,3.0,4.0])
 c = np.array([[1.0,2.0],[3.0,4.0]])
 d = np.array([[1,2],[3,4]], dtype = complex) # 指定数据类型
-~~~~
-
-### 内置函数
-~~~python
 print np.arange(0,7,1,dtype = np.int16) # 0为起点，间隔为1时可缺省(引起歧义下不可缺省)
 print np.ones((2,3,4),dtype = np.int16) # 2页，3行，4列，全1，指定数据类型
 print np.zeros((2,3,4)) # 2页，3行，4列，全0
@@ -447,6 +443,8 @@ print np.arange(0,10,2) # 起点为0，不超过10，步长为2
 print np.linspace(-1,2,5) # 起点为-1，终点为2，取5个点
 print np.random.randint(0,3,(2,3)) # 大于等于0，小于3，2行3列的随机整数
 ~~~~
+
+### 修改
 
 使用 np.c_[] 和 np.r_[] 分别添加行和列
 
@@ -459,8 +457,8 @@ array([[ 1.,  2.,  3.,  1.],
     [ 7.,  8.,  9.,  1.]])
 ~~~~
 
+### shape
 ~~~py
-
 x = np.array([[1,2,5],[2,3,5],[3,4,5],[2,3,6]])
 #输出数组的行和列数
 print x.shape  #结果： (4, 3)
@@ -468,7 +466,10 @@ print x.shape  #结果： (4, 3)
 print x.shape[0] #结果： 4
 #只输出列数
 print x.shape[1] #结果： 3
+~~~~
 
+### 内置函数
+~~~python
 ~~~~
 
 ## 纬度范围表示
@@ -579,3 +580,26 @@ print(max_float)
   把迭代结果赋值给i，然后通过experssion得到一个新的计算值；
 
   最后把所有通过experssion得到的计算值以一个新列表的形式返回。
+
+例：找出1~num中所有的质数
+
+~~~python
+
+def isPrime(num):
+  for i in range(2, num):
+    if num & i == 0:
+      return False
+  return True
+
+print [i for i in range(1, num + 1) if isPrime(i)]
+~~~~
+
+## 字典生成式
+
+生成20个学生并且筛选出成绩在90-100的学生
+
+~~~python
+stu = {str(i): random.randint(60, 100) for i in range(20)}
+res = {name: score for name, score in stu.items() if score > 90}
+print(res)
+~~~~
