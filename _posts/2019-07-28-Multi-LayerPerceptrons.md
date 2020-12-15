@@ -2,7 +2,7 @@
 layout: post
 title: "Multi-LayerPerceptrons"
 description: "Multi-Layer Perceptrons"
-categories: [nlp]
+categories: [NLP]
 tags: [Multi-LayerPer ceptrons]
 redirect_from:
   - /2019/07/28/
