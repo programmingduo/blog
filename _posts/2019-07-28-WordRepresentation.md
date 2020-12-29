@@ -31,7 +31,8 @@ redirect_from:
 
 > 1. CCKS 2019医疗领域命名实体识别任务，1.3K语句
 > 2. huangshi central hospital 病历中的主诉、现病史，各1.8w条。
-> 补充： 还有一些其他可以找到的数据，但是我这里没用。可以参考博客https://blog.csdn.net/qq_27590277/article/details/108031071
+>
+> 补充： 还有一些其他可以找到的数据，但是我这里没用。可以参考博客[中文医疗NLP领域 数据集，论文 ，知识图谱，语料，工具包](https://blog.csdn.net/qq_27590277/article/details/108031071)
 
 分词过程推荐以下两款工具：
 > 1. jieba，使用说明可见于[官方github](https://github.com/fxsjy/jieba/)
