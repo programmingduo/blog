@@ -423,6 +423,36 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 ~~~~
 
+# 异常
+
+~~~python
+try:
+
+　　...
+
+except Exception as e:
+
+　　...
+~~~~
+
+
+# 与linux交互
+
+
+~~~python
+a=os.system('ls')   ##得到的是执行的命令的返回值，并不是执行结果。成功，为0
+# a:
+# 0
+
+b=os.popen('ls').readlines()    #将得到的结果直接赋值给b列表
+# b：
+# ['anaconda-ks.cfg\n',
+#  'epel-release-7-5.noarch.rpm\n',
+#  'ipython-4.1.2\n',
+#  'ipython-4.1.2.tar.gz\n',
+#  'pip-8.1.2\n',
+#  'pip-8.1.2.tar.gz#md5=87083c0b9867963b29f7aba3613e8f4a.gz\n']
+~~~~
 
 # 实用内置函数
 
@@ -491,6 +521,27 @@ print(obj)
 #输出：Counter({'c': 3, 'a': 2, 'b': 2})
 
 ~~~~
+
+
+## 路径
+
+~~~py
+for root, dirs, files in os.walk(data_path):
+    # print(root)
+    book_name = re.search('第.+册', root)
+    if not book_name:
+      continue
+    book_name = book_name.group()
+    for file in files:
+      file_path = os.path.join(root, file)
+~~~~
+
+每次遍历的对象都是返回的是一个三元组(root,dirs,files)
+
+root 所指的是当前正在遍历的这个文件夹的本身的地址
+dirs 是一个 list ，内容是该文件夹中所有的目录的名字(不包括子目录)
+files 同样是 list , 内容是该文件夹中所有的文件(不包括子目录)
+
 
 ## 时间
 
@@ -565,6 +616,8 @@ print(-sys.maxint - 1)
 max_float=float('inf')
 print(max_float)
 ~~~~
+
+
 
 
 # 高级语法
