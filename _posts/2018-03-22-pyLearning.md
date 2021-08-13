@@ -177,6 +177,13 @@ sys.setdefaultencoding('utf-8')
 
 # 输入输出
 
+## 修改标准输入输出编码：
+
+~~~~python
+    sys.stdout = sys.__stdout__ = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8', line_buffering=True)
+    sys.stderr = sys.__stderr__ = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8', line_buffering=True)
+~~~~
+
 ## 输入
 
 ~~~python
