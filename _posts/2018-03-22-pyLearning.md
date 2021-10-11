@@ -761,7 +761,7 @@ print [i for i in range(1, num + 1) if isPrime(i)]
 
 ## 字典生成式
 
-生成20个学生并且筛选出成绩在90-100的学生
+生成20个学生并且筛选出成绩在90-100的学生。
 
 ~~~python
 stu = {str(i): random.randint(60, 100) for i in range(20)}
