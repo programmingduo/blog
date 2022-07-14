@@ -31,7 +31,7 @@ redirect_from:
 流传Godaddy的域名解析服务器被墙掉，导致域名无法访问，后来这个事情在BeiYuu也发生了，不得已需要把域名解析服务迁移到国内比较稳定的服务商处，这个迁移对于域名来说没有什么风险，最终的控制权还是在Godaddy那里，你随时都可以改回去。
 
 ### 更改解析ip
-之后要使用DNSPod更改域名解析的ip地址。（狗爹会给你一个原始的ip地址给你玩玩，但是我们要把它改成我们的github page不是。DNSPod就是用来干这个的。）DNSPod网址：<https://www.dnspod.cn>。更改ip过程参考DNSPod的官方指南：<https://www.dnspod.cn/Support>。
+之后要使用DNSPod更改域名解析的ip地址。（狗爹会给你一个原始的ip地址给你玩玩，但是我们要把它改成我们的github page不是。DNSPod就是用来干这个的。）DNSPod网址：<https://www.dnspod.cn>。更改ip过程参考DNSPod的官方指南：<https://www.dnspod.cn/Support>或者<https://docs.dnspod.cn/dns/godaddy-changedns/>。
 
 其中，在DNSPod自己的域名下添加一条A记录，地址就是Github Pages的服务IP地址：151.101.229.147(由于这个地址可能会变，所以推荐你自己ping一下github page的主机ip。cmd命令：ping github.io）
 在域名注册商处修改DNS服务:去Godaddy修改Nameservers为这两个地址：f1g1ns1.dnspod.net和f1g1ns2.dnspod.net。自己登陆账号慢慢找吧，相信你，程序员。
