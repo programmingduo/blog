@@ -425,7 +425,7 @@ prid INTEGER)
 
 函数原型：
 
-~~~
+~~~python
 re.search(pattern, string, flags=0)
 ~~~
 
@@ -495,6 +495,100 @@ STR2 STR2 2
 
 参考博客：[传送门](https://www.cnblogs.com/insane-Mr-Li/p/9092619.html)
 
+python操作excel主要用到xlrd和xlwt这两个库，即xlrd是读excel，xlwt是写excel的库。
+
+## xlrd
+
+~~~python
+data = xlrd.open_workbook(filename)#文件名以及路径，如果路径或者文件名有中文给前面加一个r拜师原生字符。
+~~~
+
+1）获取book中一个工作表
+
+~~~python
+table = data.sheets()[0]          #通过索引顺序获取
+
+table = data.sheet_by_index(sheet_indx)) #通过索引顺序获取
+
+table = data.sheet_by_name(sheet_name)#通过名称获取
+
+以上三个函数都会返回一个xlrd.sheet.Sheet()对象
+
+names = data.sheet_names()    #返回book中所有工作表的名字
+
+data.sheet_loaded(sheet_name or indx)   # 检查某个sheet是否导入完毕
+~~~
+
+2）行的操作
+
+~~~python
+nrows = table.nrows  #获取该sheet中的有效行数
+
+table.row(rowx)  #返回由该行中所有的单元格对象组成的列表
+
+table.row_slice(rowx)  #返回由该列中所有的单元格对象组成的列表
+
+table.row_types(rowx, start_colx=0, end_colx=None)    #返回由该行中所有单元格的数据类型组成的列表
+
+table.row_values(rowx, start_colx=0, end_colx=None)   #返回由该行中所有单元格的数据组成的列表
+
+table.row_len(rowx) #返回该列的有效单元格长度
+~~~
+
+3）列(colnum)的操作
+
+~~~python
+ncols = table.ncols   #获取列表的有效列数
+
+table.col(colx, start_rowx=0, end_rowx=None)  #返回由该列中所有的单元格对象组成的列表
+
+table.col_slice(colx, start_rowx=0, end_rowx=None)  #返回由该列中所有的单元格对象组成的列表
+
+table.col_types(colx, start_rowx=0, end_rowx=None)    #返回由该列中所有单元格的数据类型组成的列表
+
+table.col_values(colx, start_rowx=0, end_rowx=None)   #返回由该列中所有单元格的数据组成的列表
+~~~
+
+4）单元格的操作  
+
+~~~python
+table.cell(rowx,colx)   #返回单元格对象
+
+table.cell_type(rowx,colx)    #返回单元格中的数据类型
+
+table.cell_value(rowx,colx)   #返回单元格中的数据
+
+table.cell_xf_index(rowx, colx)   # 暂时还没有搞懂
+~~~
+
+## xlwt
+
+xlwt就那么四五个函数，都在这段代码里了。这段代码就差格式相关的内容了，需要的话自己去查[API](https://xlwt.readthedocs.io/en/latest/api.html)。
+
+
+~~~python
+import xlwt
+import os
+
+# excel的存放路径
+excel_path = r'C:\Users\zd\Desktop\test.xls'
+
+class ExcelWrite(object):
+    def __init__(self):
+        self.excel = xlwt.Workbook()  # 创建一个工作簿
+        self.sheet = self.excel.add_sheet('Sheet1')  # 创建一个工作表
+    
+    # 写入单个值
+    def write_value(self, cell, value):
+        '''
+            - cell: 传入一个单元格坐标参数，例如：cell=(0,0),表示修改第一行第一列
+        '''
+        self.sheet.write(*cell, value)
+        # （覆盖写入）要先用remove(),移动到指定路径，不然第二次在同一个路径保存会报错
+        os.remove(excel_path)
+        self.excel.save(excel_path)
+
+~~~~
 
 
 
