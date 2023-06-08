@@ -342,6 +342,23 @@ open函数可以打开或者创建文件，第二个参数是文件权限。w表
 而若参数为"a"则会在文件尾部添加新内容。
 
 
+# PDF读取
+
+PyPDF2 是一个纯 Python PDF 库，可以读取文档信息（标题，作者等）、写入、分割、合并PDF文档，它还可以对pdf文档进行添加水印、加密解密等。
+
+
+~~~
+from PyPDF2 import PdfReader
+
+
+reader = PdfReader(os.path.join(root, file))
+catalog = reader.pages[1]
+catalog = catalog.extract_text()
+catalog = re.sub('^\d+ ', '', catalog)
+~~~
+
+
+
 # 字符串
 
 ## 中文标点符号转化为英文
@@ -353,7 +370,7 @@ t2 = unicodedata.normalize('NFKC', t.decode('utf-8')).encode('utf-8')
 '''
 >>> print t2
 中国,中文,标点符号!你好?12345@#【】+=-()
-
+'''
 ~~~~
 
 ## 格式化字符串
