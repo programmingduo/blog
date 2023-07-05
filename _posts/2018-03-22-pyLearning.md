@@ -18,7 +18,8 @@ redirect_from:
 1. pip安装过程中使用豆瓣源命令：
 
 ~~~
-pip install pandas -i https://pypi.douban.com/simple
+pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
+豆瓣：https://pypi.douban.com/simple
 ~~~
 
 2. 问题描述如下：
@@ -216,7 +217,7 @@ read()的弊端：
 文件过大的时候，占用内存会过大
 
 ### readline()：
-readline()逐行读取文本，结果是一个list
+readline()逐行读取文本，结果是一个list。
 
 ~~~py
 with open(file) as f:
@@ -233,13 +234,13 @@ readline()的弊端：
 
 ### readlines()：
 
-readlines()一次性读取文本的所有内容，结果是一个list
+readlines()一次性读取文本的所有内容，结果是一个list。它可以很容易地用于打印从任何随机起始索引到某个结束索引的行。它最初读取文件的全部内容并将其副本保存在内存中。然后访问指定索引处的行。 也可以使用下标的方式查看指定的一行或多行。
 
 ~~~py
 with open(file) as f:
 for line in f.readlines():
-print line
-这种方法读取的文本内容，每行文本末尾都会带一个'\n'换行符 (可以使用L.rstrip('\n')去掉换行符）
+  print line
+  这种方法读取的文本内容，每行文本末尾都会带一个'\n'换行符 (可以使用L.rstrip('\n')去掉换行符）
 ~~~~
 
 readlines()的利端：
@@ -744,6 +745,28 @@ print(obj)
 ~~~~
 
 
+## isinstance() 
+
+用来判断一个对象是否是一个已知的类型，类似 type()。
+
+isinstance() 与 type() 区别：
+
+type() 不会认为子类是一种父类类型，不考虑继承关系。
+
+isinstance() 会认为子类是一种父类类型，考虑继承关系。
+
+如果要判断两个类型是否相同推荐使用 isinstance()。
+
+~~~python
+a = 2
+isinstance (a,int)  # true
+
+isinstance (a,str)  # False
+isinstance (a,(str,int,list))    # 是元组中的一个返回 True
+                                 # True
+
+~~~
+
 ## 路径
 
 ~~~py
@@ -840,6 +863,18 @@ for i, element in enumerate(seq):
 #1 two
 #2 three
 ~~~~
+
+### str.isnumeric()
+
+如果字符串只包含数字，那么返回 True，否则返回 False。
+
+~~~python
+print("嗨客网(www.haicoder.net)")
+# 使用 isnumeric() 函数，判断纯数字字符串
+strHaicoder = "1024"
+print("isnumeric =", strHaicoder.isnumeric())
+~~~
+
 
 ### 边边角角
 
