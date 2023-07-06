@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "C++ learning"
+title: "java learning"
 description: "个人学习java笔记"
 categories: [language]
 tags: []
