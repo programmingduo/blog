@@ -16,4 +16,5 @@ redirect_from:
 
 一张巨牛逼的图，一张图就是一个章节。
 
-![smiley](\blog\assets\images\usedInBlogs\RecommendationSystem\0.jpg)
+
+![smiley](/blog/assets/images/usedInBlogs/RecommendationSystem/0.jpg)
