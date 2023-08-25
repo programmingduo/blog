@@ -36,6 +36,7 @@ Retrying (Retry(total=4, connect=None, read=None, redirect=None)) after connecti
 [传送门](https://www.jianshu.com/p/a401a0bfddf7)
 
 # 开发手册
+
 Python安装后自带了一个叫做pydoc.py的文件。使用命令行在Python的安装目录(个人2.7安装路径：C:\Python27\)下lib路径当中，执行命令
 
 ~~~~~~~
