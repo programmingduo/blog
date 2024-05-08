@@ -113,9 +113,7 @@ sys.setdefaultencoding('utf-8')
 
 首先强调背景：
 
-1、GIL是什么？ GIL的全称是Global Interpreter Lock(全局解释器锁)，来源是python设计之初的考虑，为了数据安全所做的决定。2、每个CPU在同一时间只能执行一个线程（在单核CPU下的多线程其实都只是并发，不是并行，
-并发和并行从宏观上来讲都是同时处理多路请求的概念。但并发和并行又有区别，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。
-）
+1、GIL是什么？ GIL的全称是Global Interpreter Lock(全局解释器锁)，来源是python设计之初的考虑，为了数据安全所做的决定。2、每个CPU在同一时间只能执行一个线程（在单核CPU下的多线程其实都只是并发，不是并行，并发和并行从宏观上来讲都是同时处理多路请求的概念。但并发和并行又有区别，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。）
 
 在Python多线程下，每个线程的执行方式：
 
@@ -349,7 +347,7 @@ open函数可以打开或者创建文件，第二个参数是文件权限。w表
 PyPDF2 是一个纯 Python PDF 库，可以读取文档信息（标题，作者等）、写入、分割、合并PDF文档，它还可以对pdf文档进行添加水印、加密解密等。
 
 
-~~~
+~~~python
 from PyPDF2 import PdfReader
 
 
@@ -615,6 +613,9 @@ class ExcelWrite(object):
 
 
 ~~~python
+
+import logging
+
 logging.basicConfig(level = logging.ERROR,format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -678,6 +679,31 @@ Queue.put(item) # 写入队列，timeout等待时间
 Queue.task_done() # 在完成一项工作之后，Queue.task_done()函数向任务已经完成的队列发送一个信号。每个get()调用得到一个任务，接下来task_done()调用告诉队列该任务已经处理完毕。
 Queue.join() # 实际上意味着等到队列为空，再执行别的操作
 ~~~~
+
+## eval 和 exec
+
+
+eval 和 exec 都是python的内置函数，并且都能执行python代码，两者具体有什么区别呢？
+
+1.eval()函数只能计算单个表达式的值，而exec()函数可以动态运行代码段；
+
+2.exec()函数能直接执行文件中的python代码，eval()函数不能实现这个功能；
+
+3.eval()函数可以有返回值，而exec()函数返回值永远为None；
+
+
+~~~python
+class ModelFactory(object):
+    """
+    简单工厂，根据参数返回初始化之后的model
+    """
+
+    @staticmethod
+    def get_model(paras):
+        line = paras['name'] + "(paras)"
+        return eval(line)
+~~~~
+
 
 ## numpy
 

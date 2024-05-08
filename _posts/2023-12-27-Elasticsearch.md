@@ -184,6 +184,7 @@ $ curl -X POST 'localhost:9200/accounts/person' -d '
 注意，如果没有先创建 Index（这个例子是accounts），直接执行上面的命令，Elastic 也不会报错，而是直接生成指定的 Index。所以，打字的时候要小心，不要写错 Index 的名称。
 
 ## 查看记录
+
 向/Index/Type/Id发出 GET 请求，就可以查看这条记录。
 
 ~~~

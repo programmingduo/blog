@@ -1,0 +1,170 @@
+---
+layout: post
+title: "LLM pretraining"
+description: ""
+categories: []
+tags: []
+redirect_from:
+  - /2024/04/27/
+---
+
+* Karmdown table of content
+{:toc .toc}
+
+# 数据采集
+
+来源：期刊、会议、论坛、书籍、百科
+
+
+# 数据源采样
+
+在GPT3中，训练了一个分类器，用于筛选数据集中的高质量文档。训练分类器的过程中，使用维基百科、书籍webText等高质量数据集作为正例，网络数据作为负例，分类器采用逻辑回归，feature使用 Spark’s standard tokenizer and HashingTF。
+
+对不同的数据源采取不同的采样比例。相对较大的数据集，在最终构建的语料库里面占比也会较大，但训练的epoch会较小。而较小的数据集，则可以多训练几个epoch。
+
+# 数据清洗
+
+通常来讲，处理互联网数据集都包含以下几步：
+
+语言识别：判断文章的语言类型，在 [LLaMA] 的数据预处理中过滤掉了 Common Crawl 中所有的非英文语料。
+规则过滤：用规则过滤掉那些低质内容，例如：同一句话中出现过多标点符号、或包含一些违禁词等。
+基于打分模型的内容过滤：通过训练一个轻量的机器学习模型，用于判断一篇文章是否足够优质。
+文章去重：去掉一些相似内容的文章，通常分为：确定性去重（命中一些明确的公共子串或模板） 和 模糊性去重（[MinHash] 或 [SimHash]）。
+
+## Falcon
+
+Falcon数据清洗的设计初衷主要有三点：
+
+1. scale first
+2. 严格去重
+3. 过滤保持中立：坚持简单的规则设计和过滤器，URL过滤仅使用在成人内容上。
+
+下面详细介绍[Falcon](https://arxiv.org/pdf/2306.01116)的清洗流程：
+
+
+![smiley](/blog/assets/images/usedInBlogs/LLMPretraining/0.png)
+
+![smiley](/blog/assets/images/usedInBlogs/LLMPretraining/1.png)
+
+
+### URL Filtering
+
+在这一步中，作者通过制定 URL 黑名单（成人网站等）和计算 URL 分数来决定内容是否保留。
+
+感谢 @TheThirdRome 的指正。
+为了区分于人工精心构建的数据集，像 Arxiv、WikiPedia 这些前缀网站的内容也将被过滤。
+
+
+
+### 内容抽取
+
+在获得过滤后的 URL 集合后，我们需要获取到这些 URL 中的「文本信息」，
+
+需要过滤并丢弃「目录」、「标题」、「广告」等无关的内容，
+
+作者使用 [trafilatura] 库来进行内容抓取，trafilatura 的使用方法也比较简单：
+
+~~~py
+# load necessary components
+>>> from trafilatura import fetch_url, extract
+
+# download a web page
+>>> url = 'https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/'
+>>> downloaded = fetch_url(url)
+>>> downloaded is None  # assuming the download was successful
+False
+
+# extract information from HTML
+>>> result = extract(downloaded)
+>>> print(result)
+# newlines preserved, TXT output ...
+~~~
+可以通过指定特定的 HTML 元素来过滤掉不需要的内容（如表格、图片等）：
+
+~~~py
+# load necessary components
+>>> from trafilatura import fetch_url, extract
+
+# download a web page
+>>> url = 'https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/'
+>>> downloaded = fetch_url(url)
+>>> downloaded is None  # assuming the download was successful
+False
+
+# extract information from HTML
+>>> result = extract(downloaded)
+>>> print(result)
+# newlines preserved, TXT output ...
+~~~
+
+
+###语言识别（过滤掉非英语的语料）
+
+作者使用 [fastText] 训练了一个语言识别模型，去掉那些英语得分低于 0.65 的文章，
+
+这类低质文章主要包括：非英语文章、以及那些不是由自然语言构成的网页（比如一些纯图像的博客和广告）。
+
+### 低质过滤
+
+#### 篇章级别过滤
+
+首先，去除一些文章内一直重复同一段内容的文章，以及一些包含错误信息的文章（例如：抓取超时等）；
+
+其次，对每一篇文章，通过判断文章整体长度、标点符号占文章长度的比例等，来过滤掉那些不正规的文章；
+
+#### 句子级别过滤
+
+过滤掉文章中的一些无用的句子，比如：求关注、求转发、喜欢本文请一键三连 ❤️~
+
+这种句子通常没有具体含义，但话术繁多，又难以穷举。
+
+因此，作者通过设定以下策略来过滤掉这些语句（某些规则只适用于英语）：
+
+1. 句子中主要由大写字符组成（丢弃）
+2. 句子由纯数字组成（丢弃）
+3. 命中特定关键词，如['关注', '转发', '点赞']（丢弃）
+4. 如果句子长度小于 10，且命中以下模版：
+   * 句子以（登录、注册）开头。
+   * 句子以（展开、更多）结尾。
+
+可以看到，数据处理真的是一个非常精细的工作。论文里也有提到：尽管通过训练模型可以加快速度，但考虑到模型训练会出现输出偏好，所以作者依旧保持使用规则来清理数据。
+
+### 文章去重
+
+最后，作者对剩下的内容进行去重。
+
+首先，通过 MinHash 的方法对剩余文章进行 MinHash 值计算，每篇文章使用 9000 个 Hash 值（用 20 个桶，每个桶 450 个值）；
+
+作者发现，如果使用过少的桶（如：The Pile 中使用的 10 个桶），会导致去重比例过低。
+其次，使用确定性去重的方法，删掉那些重复片段超过 50 个 token 的文章。
+
+最后，根据 URL 进一步去除了一部分重复的文章。
+
+
+### 实验结论
+
+论文中通过实验结论指出：「精心构造数据集」并不一定是预训练语言模型的最优解，
+
+通过严格且恰当的规则去清洗数据，即使是在最容易获得的互联网文本上，模型也能表现的最好。
+
+总的来说，Falcon 是一篇更侧重于「数据清洗」的论文，
+
+其实从 Falcon 最后发布的模型结构来看，也是传统的 Rotary + Flash Attention 的 Decoder 结构，
+
+但从 Falcon 最后优异的效果来看，似乎是在向我们证明：
+
+不管是 Pretrain 还是 Finetune，「数据质量」都比「模型结构」要更加重要。
+
+
+# 文本清洗框架
+
+文本清洗框架对比和小结：
+
+> SlimPajama 框架专注于大规模数据集的去重，整套方案支持并行和内存优化，可处理万亿级数据。但目前仅针对英文数据。
+> MNBVC 框架面向中文语料清洗，支持文本提取、去重和质量评分。但仅支持文档级别的去重，去重粒度有待细化。
+> CC-NET 支持多语种清洗，实现了完整的文本清洗链路，包括语种分类、启发式规则过滤、质量评分和重组输出。但安装较复杂，也缺乏多粒度去重功能。
+> 当前清洗框架多局限于特定语种或数据源，没有通用的多语种清洗系统。理想的清洗框架应支持多语种多格式输入，具备大规模并行和可扩展能力，针对不同类型数据提供自定义规则和功能，支持段落、章节、文档等多粒度去重功能等。融合前人方法的优势，建立一个模块化、可配置、可扩展的清洗框架，并提供丰富的规则库，是值得探索的方向。
+
+
+# 维度统计
+
