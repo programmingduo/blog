@@ -13,12 +13,24 @@ redirect_from:
 
 # 环境安装
 
+## 安装指定版本
+
+~~~
+wget https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tgz
+tar -zxvf Python-3.10.6.tgz
+cd Python-3.10.6
+./configure --enable-optimizations --prefix=/usr/local/linuxidctest --with-openssl
+make && make install 
+~~~
+
 网上有关教程有很多，这里只写碰到的问题：
 
 1. pip安装过程中使用豆瓣源命令：
 
 ~~~
 pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirement.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
 豆瓣：https://pypi.douban.com/simple
 ~~~
 
@@ -70,6 +82,8 @@ Python还提供一个余数运算，可以得到两个整数相除的余数：
 >>> 10 // 3
 3
 
+>>> 10 % 3
+1
 ~~~~
 
 ## 编码
@@ -85,9 +99,15 @@ Unicode编码： 你可以想得到的是，全世界有上百种语言，日本
 UTF-8： 新的问题又出现了：如果统一成Unicode编码，乱码问题从此消失了。但是，如果你写的文本基本上全部是英文的话，用Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上就十分不划算。所以，本着节约的精神，又出现了把Unicode编码转化为“可变长编码”的UTF-8编码。UTF-8编码把一个Unicode字符根据不同的数字大小编码成1-6个字节，常用的英文字母被编码成1个字节，汉字通常是3个字节，只有很生僻的字符才会被编码成4-6个字节。如果你要传输的文本包含大量英文字符，用UTF-8编码就能节省空间：
 
 
-字符  ASCII   Unicode UTF-8
-A   01000001    00000000 01000001   01000001
-中   x   01001110 00101101   11100100 10111000 10101101
+    
+    
+    |-----------------:|:-----------:|:---------------:|:---------------:|
+    | 字符 |  ASCII | Unicode     | UTF-8   |
+    | A  |01000001  | 00000000 01000001  |  01000001  |
+    | 中  |x  | 01001110 00101101   |  11100100 10111000 10101101 |
+    |-----------------+------------+-----------------+----------------|
+
+
 
 Python对bytes类型的数据用带b前缀的单引号或双引号表示
 

@@ -16,11 +16,6 @@ redirect_from:
 来源：期刊、会议、论坛、书籍、百科
 
 
-# 数据源采样
-
-在GPT3中，训练了一个分类器，用于筛选数据集中的高质量文档。训练分类器的过程中，使用维基百科、书籍webText等高质量数据集作为正例，网络数据作为负例，分类器采用逻辑回归，feature使用 Spark’s standard tokenizer and HashingTF。
-
-对不同的数据源采取不同的采样比例。相对较大的数据集，在最终构建的语料库里面占比也会较大，但训练的epoch会较小。而较小的数据集，则可以多训练几个epoch。
 
 # 数据清洗
 
@@ -51,7 +46,6 @@ Falcon数据清洗的设计初衷主要有三点：
 
 在这一步中，作者通过制定 URL 黑名单（成人网站等）和计算 URL 分数来决定内容是否保留。
 
-感谢 @TheThirdRome 的指正。
 为了区分于人工精心构建的数据集，像 Arxiv、WikiPedia 这些前缀网站的内容也将被过滤。
 
 
@@ -79,26 +73,9 @@ False
 >>> print(result)
 # newlines preserved, TXT output ...
 ~~~
-可以通过指定特定的 HTML 元素来过滤掉不需要的内容（如表格、图片等）：
-
-~~~py
-# load necessary components
->>> from trafilatura import fetch_url, extract
-
-# download a web page
->>> url = 'https://github.blog/2019-03-29-leader-spotlight-erin-spiceland/'
->>> downloaded = fetch_url(url)
->>> downloaded is None  # assuming the download was successful
-False
-
-# extract information from HTML
->>> result = extract(downloaded)
->>> print(result)
-# newlines preserved, TXT output ...
-~~~
 
 
-###语言识别（过滤掉非英语的语料）
+### 语言识别（过滤掉非英语的语料）
 
 作者使用 [fastText] 训练了一个语言识别模型，去掉那些英语得分低于 0.65 的文章，
 
@@ -165,6 +142,13 @@ False
 > CC-NET 支持多语种清洗，实现了完整的文本清洗链路，包括语种分类、启发式规则过滤、质量评分和重组输出。但安装较复杂，也缺乏多粒度去重功能。
 > 当前清洗框架多局限于特定语种或数据源，没有通用的多语种清洗系统。理想的清洗框架应支持多语种多格式输入，具备大规模并行和可扩展能力，针对不同类型数据提供自定义规则和功能，支持段落、章节、文档等多粒度去重功能等。融合前人方法的优势，建立一个模块化、可配置、可扩展的清洗框架，并提供丰富的规则库，是值得探索的方向。
 
+
+
+# 数据源采样
+
+在GPT3中，训练了一个分类器，用于筛选数据集中的高质量文档。训练分类器的过程中，使用维基百科、书籍webText等高质量数据集作为正例，网络数据作为负例，分类器采用逻辑回归，feature使用 Spark’s standard tokenizer and HashingTF。
+
+对不同的数据源采取不同的采样比例。相对较大的数据集，在最终构建的语料库里面占比也会较大，但训练的epoch会较小。而较小的数据集，则可以多训练几个epoch。
 
 # 维度统计
 
